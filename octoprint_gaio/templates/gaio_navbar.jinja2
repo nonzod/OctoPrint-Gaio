@@ -1,2 +1,1 @@
-<!-- <a onclick='OctoPrint.simpleApiGet("gaio")' id="a-gaio-io1">{{ plugin_gaio_io1|escape }} <i class="far fa-lightbulb"></i></a> -->
-<a id="gaio-light" data-bind="attr: { title: 'Light Status' }, html: lightStatus(), click: toggleLight()"></a>
+<a id="gaio-light" data-bind="attr: { title: 'Light Status' }, html: lightStatus(), click: function() { toggleLight() }"></a>

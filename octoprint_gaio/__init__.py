@@ -27,10 +27,10 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	def on_after_startup(self):
 		self.io_state = False
 		
-		# GPIO.setmode(GPIO.BOARD)
-		# GPIO.setwarnings(False)
 		GPIO.setup(int(self._settings.get(["io1"])), GPIO.OUT)
-		GPIO.output(int(self._settings.get(["io1"])), GPIO.HIGH)
+		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
+
+		self._logger.info(octoprint.util.platform.get_os());
 	
 	def get_api_commands(self):
 		return dict(
@@ -79,7 +79,6 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_template_configs(self):
 		return [
-        	dict(type="navbar", custom_bindings=False),
         	dict(type="settings", custom_bindings=False)
     	]
 
