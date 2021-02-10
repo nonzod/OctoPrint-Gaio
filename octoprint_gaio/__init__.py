@@ -29,7 +29,7 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		
 		# GPIO.setmode(GPIO.BOARD)
 		# GPIO.setwarnings(False)
-		GPIO.setup(self._settings.get(["io1"]), GPIO.OUT)
+		GPIO.setup(int(self._settings.get(["io1"])), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
 	
 	def get_api_commands(self):
@@ -62,8 +62,8 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_settings_defaults(self):
 		return dict(
-			io1="17",
-			io2="18"
+			io1="18",
+			io2="19"
 		)
 
 	##~~ AssetPlugin mixin
