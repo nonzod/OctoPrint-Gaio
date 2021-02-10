@@ -29,6 +29,7 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		
 		# GPIO.setmode(GPIO.BOARD)
 		# GPIO.setwarnings(False)
+		GPIO.setup(self._settings.get(["io1"]), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
 	
 	def get_api_commands(self):
