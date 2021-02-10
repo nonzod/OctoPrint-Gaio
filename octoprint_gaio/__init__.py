@@ -30,7 +30,7 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		# GPIO.setmode(GPIO.BOARD)
 		# GPIO.setwarnings(False)
 		GPIO.setup(int(self._settings.get(["io1"])), GPIO.OUT)
-		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
+		GPIO.output(int(self._settings.get(["io1"])), GPIO.HIGH)
 	
 	def get_api_commands(self):
 		return dict(
@@ -40,10 +40,10 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	def on_api_command(self, command, data):
 		if command == "light_toggle":
 			if(self.light_state=="On"):
-				GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
+				GPIO.output(int(self._settings.get(["io1"])), GPIO.HIGH)
 				self.light_state = "Off"
 			else:
-				GPIO.output(int(self._settings.get(["io1"])), GPIO.HIGH)
+				GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
 				self.light_state = "On"
 
 			# self._plugin_manager.send_plugin_message(self._identifier, dict(light_state=self.light_state))
