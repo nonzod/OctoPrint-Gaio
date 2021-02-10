@@ -13,8 +13,6 @@ import octoprint.plugin
 import flask
 import RPi.GPIO as GPIO
 
-# import RPi.GPIO as GPIO
-
 class GaioPlugin(octoprint.plugin.StartupPlugin,
 				octoprint.plugin.SettingsPlugin,
 				octoprint.plugin.AssetPlugin,
@@ -29,8 +27,8 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	def on_after_startup(self):
 		self.io_state = False
 		
-		GPIO.setmode(GPIO.BOARD)
-		GPIO.setwarnings(False)
+		# GPIO.setmode(GPIO.BOARD)
+		# GPIO.setwarnings(False)
 		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
 	
 	def get_api_commands(self):
