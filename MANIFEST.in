@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_gaio/templates *
+recursive-include octoprint_gaio/translations *
+recursive-include octoprint_gaio/static *
