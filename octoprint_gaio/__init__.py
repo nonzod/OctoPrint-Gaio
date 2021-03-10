@@ -24,11 +24,13 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
 		self._logger.info(octoprint.util.platform.get_os())
+		self.update_icon()
 	
 	def on_settings_save(self, data):
 		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
 		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
+		self.update_icon()
 
 	def get_api_commands(self):
 		return dict(
@@ -37,17 +39,8 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 
 	def on_api_command(self, command, data):
 		if command == "light_toggle":
-			if(self.light_state=="On"):
-				GPIO.output(int(self._settings.get(["pin_light"])), GPIO.HIGH)
-				self.light_state = "Off"
-			else:
-				GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
-				self.light_state = "On"
-
-			# self._plugin_manager.send_plugin_message(self._identifier, dict(light_state=self.light_state))
-
+			self.update_icon()
 			self._logger.info(self.light_state)
-
 			return flask.jsonify(status="ok", light_state=self.light_state)
 			
 	def on_api_get(self, request):
@@ -63,8 +56,6 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	##~~ AssetPlugin mixin
 
 	def get_assets(self):
-		# Define your plugin's asset files to automatically include in the
-		# core UI here.
 		return dict(
 			js=["js/gaio.js"],
 			css=["css/gaio.css"],
@@ -80,6 +71,15 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		return dict(
 			pin_light=self._settings.get(["pin_light"]),
 		)
+
+	# Cose nostre
+	def update_icon(self):
+		if(self.light_state=="On"):
+			GPIO.output(int(self._settings.get(["pin_light"])), GPIO.HIGH)
+			self.light_state = "Off"
+		else:
+			GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
+			self.light_state = "On"
 
 	##~~ Softwareupdate hook
 
