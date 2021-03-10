@@ -18,14 +18,18 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 				octoprint.plugin.AssetPlugin,
 				octoprint.plugin.TemplatePlugin,
 				octoprint.plugin.SimpleApiPlugin):
-	light_state = "Off"
+	light_state = "On"
 
 	def on_after_startup(self):
 		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
-
 		self._logger.info(octoprint.util.platform.get_os())
 	
+	def on_settings_save(self, data):
+		octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
+		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
+		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
+
 	def get_api_commands(self):
 		return dict(
 			light_toggle=[]
