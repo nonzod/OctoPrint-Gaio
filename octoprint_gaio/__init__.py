@@ -47,9 +47,6 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 			return flask.jsonify(status="ok", light_state=self.light_state)
 			
 	def on_api_get(self, request):
-		# self._settings.set(["io1"], "666")
-		# self._settings.save()
-
 		return flask.jsonify(status="ok", pin_light=self._settings.get(["pin_light"]))
 
 	##~~ SettingsPlugin mixin

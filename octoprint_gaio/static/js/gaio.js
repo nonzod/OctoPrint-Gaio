@@ -15,10 +15,8 @@ $(function() {
         // self.loginStateViewModel = parameters[0];
         // self.settingsViewModel = parameters[1];
 
-        // TODO: Implement your plugin's view model here.
-
         self.onBeforeBinding = function() {
-            self.pin_light(self.settings.settings.plugins.gaio.io1());
+            self.pin_light(self.settings.settings.plugins.gaio.pin_light());
             self.lightStatus('<i class="far fa-lightbulb"></i>');
         }
 
@@ -26,15 +24,6 @@ $(function() {
             if (plugin != "gaio") {
                 return;
             }
-/*
-            if(data.light_state) {
-                if (data.light_state == "On") {
-                    self.lightStatus('<i class="far fa-lightbulb"></i>');
-                } else {
-                    self.lightStatus('<i class="fas fa-lightbulb"></i>');
-                }
-            }*/
-
         }
 
         self.toggleLight = function(actual) {
