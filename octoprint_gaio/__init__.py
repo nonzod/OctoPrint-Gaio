@@ -19,18 +19,12 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 				octoprint.plugin.TemplatePlugin,
 				octoprint.plugin.SimpleApiPlugin):
 	light_state = "Off"
-	io_state = dict(
-			io1 = False,
-			io2 = False
-		)
 
 	def on_after_startup(self):
-		self.io_state = False
-		
-		GPIO.setup(int(self._settings.get(["io1"])), GPIO.OUT)
-		GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
+		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
+		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
 
-		self._logger.info(octoprint.util.platform.get_os());
+		self._logger.info(octoprint.util.platform.get_os())
 	
 	def get_api_commands(self):
 		return dict(
@@ -40,10 +34,10 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	def on_api_command(self, command, data):
 		if command == "light_toggle":
 			if(self.light_state=="On"):
-				GPIO.output(int(self._settings.get(["io1"])), GPIO.HIGH)
+				GPIO.output(int(self._settings.get(["pin_light"])), GPIO.HIGH)
 				self.light_state = "Off"
 			else:
-				GPIO.output(int(self._settings.get(["io1"])), GPIO.LOW)
+				GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
 				self.light_state = "On"
 
 			# self._plugin_manager.send_plugin_message(self._identifier, dict(light_state=self.light_state))
@@ -56,14 +50,13 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 		# self._settings.set(["io1"], "666")
 		# self._settings.save()
 
-		return flask.jsonify(status="ok", io1=self._settings.get(["io1"]))
+		return flask.jsonify(status="ok", pin_light=self._settings.get(["pin_light"]))
 
 	##~~ SettingsPlugin mixin
 
 	def get_settings_defaults(self):
 		return dict(
-			io1="18",
-			io2="19"
+			pin_light="0"
 		)
 
 	##~~ AssetPlugin mixin
@@ -84,9 +77,7 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 
 	def get_template_vars(self):
 		return dict(
-			io1=self._settings.get(["io1"]),
-			io2=self._settings.get(["io2"]),
-			lightStatus=""
+			pin_light=self._settings.get(["pin_light"]),
 		)
 
 	##~~ Softwareupdate hook

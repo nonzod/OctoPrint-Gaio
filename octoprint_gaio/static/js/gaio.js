@@ -8,7 +8,7 @@ $(function() {
     function GaioViewModel(parameters) {
         var self = this;
         self.settings = parameters[0];
-        self.io1 = ko.observable("");
+        self.pin_light = ko.observable("");
         self.lightStatus = ko.observable("");
 
         // assign the injected parameters, e.g.:
@@ -18,7 +18,7 @@ $(function() {
         // TODO: Implement your plugin's view model here.
 
         self.onBeforeBinding = function() {
-            self.io1(self.settings.settings.plugins.gaio.io1());
+            self.pin_light(self.settings.settings.plugins.gaio.io1());
             self.lightStatus('<i class="far fa-lightbulb"></i>');
         }
 
@@ -48,7 +48,7 @@ $(function() {
                     console.log(self.lightStatus);
                 });
 
-            return "Suca";
+            return { "light_state" : self.lightStatus };
         }
     }
 
