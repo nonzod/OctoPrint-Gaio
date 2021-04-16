@@ -21,7 +21,7 @@ class GaioPlugin(octoprint.plugin.StartupPlugin,
 	light_state = "On"
 
 	def on_after_startup(self):
-		GPIO.setmode(GPIO.BOARD) # TODO: Rendere selezionabile da config
+		GPIO.setmode(GPIO.BCM) # TODO: Rendere selezionabile da config
 		GPIO.setup(int(self._settings.get(["pin_light"])), GPIO.OUT)
 		GPIO.output(int(self._settings.get(["pin_light"])), GPIO.LOW)
 		self._logger.info(octoprint.util.platform.get_os())
